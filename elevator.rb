@@ -9,6 +9,8 @@ class Elevator
   attr_accessor :moving
   def initialize(floors)
     @floors = floors
+    Move.direction = :not_set
+    Person.clear
     Move.set_floors_numbers(floors)
     @moving = false
   end
@@ -29,7 +31,7 @@ class Elevator
   def deliver_persons
     @moving = true
     Move.up until Move.current_floor == Person.first.start
-    until Move.current_floor == Person.last_stop(Move.direction)
+    until Person.all.empty? || Move.current_floor == Person.last_stop(Move.direction)
       make_random_call
       choose_destination?
       Move.in_set_direction
@@ -57,8 +59,6 @@ class Elevator
   end
 
 
-  #RANDOM ELEMENTS > should i put them elsewhere ?
-
   def choose_destination?
     choose_random_destination if Person.starts.include?(Move.current_floor)
   end
@@ -80,4 +80,4 @@ class Elevator
 
 end
 
-Elevator.new(10).perform
+# Elevator.new(10).perform

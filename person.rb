@@ -2,6 +2,7 @@ class Person
 
   @@instances = []
   @@counter = 0
+  @@successfully_arrived = []
   attr_reader :start, :id
   attr_accessor :destination
 
@@ -89,8 +90,19 @@ class Person
     puts ""
     self.arrived(current_floor).each do |person|
       puts "> #{person.id} débarque au #{current_floor} ()"
+      @@successfully_arrived << person
     end
     puts ""
+    @@instances = @@instances - self.arrived(current_floor)
+  end
+
+  def self.clear
+    @@instances.clear
+    @@counter = 0
+  end
+
+  def self.successes
+    @@successfully_arrived
   end
 
 end
