@@ -2,11 +2,12 @@ class Move
 
   DIRECTIONS = [:up, :down]
   class << self
-    attr_accessor :direction, :floors, :current_floor
+    attr_accessor :direction, :floors, :current_floor, :ongoing
   end
   @direction = :not_set
   @floors = 0
   @current_floor = 0
+  @ongoing = false
 
   def self.begin_message
     puts "> Ascenseur est au #{self.current_floor}"
